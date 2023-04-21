@@ -1,0 +1,51 @@
+# same config as regular typeshed
+[tool.black]
+line_length = 130
+target_version = ["py310"]
+skip_magic_trailing_comma = true
+
+[tool.isort]
+profile = "black"
+combine_as_imports = true
+line_length = 130
+skip = [".git", ".github", ".venv"]
+extra_standard_library = [
+    "typing_extensions",
+    "_typeshed",
+    # Extra modules not recognized by isort
+    "_thread",
+    "esp",
+    "esp32",
+    "framebuf",
+    "lcd160cr",
+    "machine.ADCWiPy",
+    "machine",
+    "machine.TimerWiPy",
+    "micropython",
+    "neopixel",
+    "network",
+    "pyb",
+    "stm",
+    "uarray",
+    "uasyncio",
+    "ubinascii",
+    "ubluetooth",
+    "ucollections",
+    "ucryptolib",
+    "uctypes",
+    "uerrno",
+    "uhashlib",
+    "uheapq",
+    "uio",
+    "ujson",
+    "uos",
+    "ure",
+    "uselect",
+    "usocket",
+    "ussl",
+    "ustruct",
+    "usys",
+    "utime",
+    "uzlib",
+    "wipy",
+]

@@ -22,38 +22,26 @@ from zipfile import ZipFile
 
 def main():
     parse_args: Final = ArgumentParser(
-        description="Copy Micropython typesheds (a.k.a.: interface stubs, `pyi` files, and type hints) into given directory (directory must exist)"
+        description=(
+            "Copy Micropython typesheds (a.k.a.: interface stubs, `pyi` files, and type hints) into given directory (directory"
+            " must exist)"
+        )
     )
     parse_args.add_argument(
-        "-V",
-        "--version",
-        help="show program's version number and exit",
-        action="version",
-        version="%(prog)s " + __version__,
+        "-V", "--version", help="show program's version number and exit", action="version", version="%(prog)s " + __version__
     )
-    parse_args.add_argument(
-        "directory",
-        help="directory (which must exist) into which typesheds are copied into",
-    )
+    parse_args.add_argument("directory", help="directory (which must exist) into which typesheds are copied into")
     args: Final = parse_args.parse_args()
     destination_dir: Final = Path(args.directory)
     if not destination_dir.is_dir():
-        raise NotADirectoryError(
-            f"Given destination directory, `{destination_dir}`, is not an existing directory!"
-        )
+        raise NotADirectoryError(f"Given destination directory, `{destination_dir}`, is not an existing directory!")
 
-    with urlopen(
-        "https://github.com/hlovatt/PyBoardTypeshed/archive/master.zip"
-    ) as http_response:
+    with urlopen("https://github.com/hlovatt/PyBoardTypeshed/archive/master.zip") as http_response:
         with ZipFile(BytesIO(http_response.read())) as zipfile:
             typesheds: Final = [f for f in zipfile.namelist() if f.endswith(".pyi")]
             with TemporaryDirectory() as temp_top_level:
                 zipfile.extractall(path=temp_top_level, members=typesheds)
-                temp_typeshed_level = (
-                    Path(temp_top_level)
-                    / "PyBoardTypeshed-master"
-                    / "micropython_typesheds"
-                )
+                temp_typeshed_level = Path(temp_top_level) / "PyBoardTypeshed-master" / "micropython_typesheds"
                 for file in scandir(temp_typeshed_level):
                     copy2(file, destination_dir)
 

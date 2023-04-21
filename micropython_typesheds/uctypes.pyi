@@ -187,19 +187,26 @@ __copyright__ = "Howard C Lovatt, 2020 onwards."
 __license__ = "MIT https://opensource.org/licenses/MIT (as used by MicroPython)."
 __version__ = "7.5.3"  # Version set by https://github.com/hlovatt/tag2ver
 
+from _typeshed import AnyReadableBuf
 from typing import Final
 
-from uio import AnyReadableBuf
-
-_ScalarProperty: Final = int
-_RecursiveProperty: Final = tuple[int, "_property"]
-_ArrayProperty: Final = tuple[int, int]
-_ArrayOfAggregateProperty: Final = tuple[int, int, "_property"]
-_PointerToAPrimitiveProperty: Final = tuple[int, int]
-_PointerToAaAggregateProperty: Final = tuple[int, "_property"]
-_BitfieldProperty: Final = int
-_property: Final = _ScalarProperty | _RecursiveProperty | _ArrayProperty | _ArrayOfAggregateProperty | _PointerToAPrimitiveProperty | _PointerToAaAggregateProperty | _BitfieldProperty
-_descriptor: Final = tuple[str, _property]
+_ScalarProperty: TypeAlias = int
+_RecursiveProperty: TypeAlias = tuple[int, "_property"]
+_ArrayProperty: TypeAlias = tuple[int, int]
+_ArrayOfAggregateProperty: TypeAlias = tuple[int, int, "_property"]
+_PointerToAPrimitiveProperty: TypeAlias = tuple[int, int]
+_PointerToAaAggregateProperty: TypeAlias = tuple[int, "_property"]
+_BitfieldProperty: TypeAlias = int
+_property: TypeAlias = (
+    _ScalarProperty
+    | _RecursiveProperty
+    | _ArrayProperty
+    | _ArrayOfAggregateProperty
+    | _PointerToAPrimitiveProperty
+    | _PointerToAaAggregateProperty
+    | _BitfieldProperty
+)
+_descriptor: TypeAlias = tuple[str, _property]
 
 LITTLE_ENDIAN: Final[int] = ...
 """
@@ -222,33 +229,33 @@ Layout type for a native structure - with data endianness and alignment
 # noinspection PyShadowingNames
 def sizeof(struct: struct | _descriptor, layout_type: int = NATIVE, /) -> int:
     """
-   Return size of data structure in bytes. The *struct* argument can be
-   either a structure class or a specific instantiated structure object
-   (or its aggregate field).
-   """
+    Return size of data structure in bytes. The *struct* argument can be
+    either a structure class or a specific instantiated structure object
+    (or its aggregate field).
+    """
 
 def addressof(obj: AnyReadableBuf, /) -> int:
     """
-   Return address of an object. Argument should be bytes, bytearray or
-   other object supporting buffer protocol (and address of this buffer
-   is what actually returned).
-   """
+    Return address of an object. Argument should be bytes, bytearray or
+    other object supporting buffer protocol (and address of this buffer
+    is what actually returned).
+    """
 
 def bytes_at(addr: int, size: int, /) -> bytes:
     """
-   Capture memory at the given address and size as bytes object. As bytes
-   object is immutable, memory is actually duplicated and copied into
-   bytes object, so if memory contents change later, created object
-   retains original value.
-   """
+    Capture memory at the given address and size as bytes object. As bytes
+    object is immutable, memory is actually duplicated and copied into
+    bytes object, so if memory contents change later, created object
+    retains original value.
+    """
 
 def bytearray_at(addr: int, size: int, /) -> bytearray:
     """
-   Capture memory at the given address and size as bytearray object.
-   Unlike bytes_at() function above, memory is captured by reference,
-   so it can be both written too, and you will access current value
-   at the given memory address.
-   """
+    Capture memory at the given address and size as bytearray object.
+    Unlike bytes_at() function above, memory is captured by reference,
+    so it can be both written too, and you will access current value
+    at the given memory address.
+    """
 
 UINT8: Final[int] = ...
 """
@@ -331,14 +338,12 @@ Type constants for pointers and arrays. Note that there is no explicit
 # noinspection PyPep8Naming
 class struct:
     """
-   Module contents
-   ---------------
-   """
+    Module contents
+    ---------------
+    """
 
-    def __init__(
-        self, addr: int, descriptor: _descriptor, layout_type: int = NATIVE, /
-    ):
+    def __init__(self, addr: int, descriptor: _descriptor, layout_type: int = NATIVE, /):
         """
-      Instantiate a "foreign data structure" object based on structure address in
-      memory, descriptor (encoded as a dictionary), and layout type (see below).
-      """
+        Instantiate a "foreign data structure" object based on structure address in
+        memory, descriptor (encoded as a dictionary), and layout type (see below).
+        """

@@ -19,7 +19,7 @@ __copyright__ = "Howard C Lovatt, 2020 onwards."
 __license__ = "MIT https://opensource.org/licenses/MIT (as used by MicroPython)."
 __version__ = "7.5.3"  # Version set by https://github.com/hlovatt/tag2ver
 
-from typing import Final, Dict
+from typing import Dict, Final
 
 EEXIST: Final[int] = ...
 """
@@ -49,7 +49,7 @@ Error codes, based on ANSI C/POSIX standard. All error codes start with
                 print("Directory already exists")
 """
 
-errorcode: Final[Dict[int, str]] = ...
+errorcode: Final[dict[int, str]] = ...
 """
 Dictionary mapping numeric error codes to strings with symbolic error
     code (see above)::

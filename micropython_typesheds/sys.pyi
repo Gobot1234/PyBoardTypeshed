@@ -16,64 +16,10 @@ __copyright__ = "Howard C Lovatt, 2020 onwards."
 __license__ = "MIT https://opensource.org/licenses/MIT (as used by MicroPython)."
 __version__ = "7.5.3"  # Version set by https://github.com/hlovatt/tag2ver
 
-from typing import Callable, Final, Literal, NoReturn
+from collections.abc import Callable
+from typing import Final, Literal, NoReturn
 
 from uio import IOBase
-
-class Implementation(tuple[str, tuple[int, int, int], int]):
-    name: str
-    version: tuple[int, int, int]
-    mpy: int
-
-class ModuleType:
-    __class__: str
-    __name__: str
-
-def exit(retval: object = 0, /) -> NoReturn:
-    """
-   Terminate current program with a given exit code. Underlyingly, this
-   function raise as `SystemExit` exception. If an argument is given, its
-   value given as an argument to `SystemExit`.
-   """
-
-def atexit(func: Callable[[], None] | None, /) -> Callable[[], None] | None:
-    """
-   Register *func* to be called upon termination.  *func* must be a callable
-   that takes no arguments, or ``None`` to disable the call.  The ``atexit``
-   function will return the previous value set by this function, which is
-   initially ``None``.
-   
-   .. admonition:: Difference to CPython
-      :class: attention
-   
-      This function is a MicroPython extension intended to provide similar
-      functionality to the :mod:`atexit` module in CPython.
-   """
-
-def print_exception(exc: BaseException, file: IOBase[str] = "stdout", /) -> None:
-    """
-   Print exception with a traceback to a file-like object *file* (or
-   `sys.stdout` by default).
-   
-   .. admonition:: Difference to CPython
-      :class: attention
-   
-      This is simplified version of a function which appears in the
-      ``traceback`` module in CPython. Unlike ``traceback.print_exception()``,
-      this function takes just exception value instead of exception type,
-      exception value, and traceback object; *file* argument should be
-      positional; further arguments are not supported. CPython-compatible
-      ``traceback`` module can be found in `micropython-lib`.
-   
-   .. function:: settrace(tracefunc)
-   
-   Enable tracing of bytecode execution.  For details see the `CPython
-   documentaion <https://docs.python.org/3/library/sys.html#sys.settrace>`_.
-   
-   This function requires a custom MicroPython build as it is typically not
-   present in pre-built firmware (due to it affecting performance).  The relevant
-   configuration option is *MICROPY_PY_SYS_SETTRACE*.
-   """
 
 argv: Final[list[str]] = ...
 """
@@ -189,3 +135,58 @@ Python language version that this implementation conforms to, as a tuple of ints
       Only the first three version numbers (major, minor, micro) are supported and
       they can be referenced only by index, not by name.
 """
+
+class Implementation(tuple[str, tuple[int, int, int], int]):
+    name: str
+    version: tuple[int, int, int]
+    mpy: int
+
+class ModuleType:
+    __class__: str
+    __name__: str
+
+def exit(retval: object = 0, /) -> NoReturn:
+    """
+    Terminate current program with a given exit code. Underlyingly, this
+    function raise as `SystemExit` exception. If an argument is given, its
+    value given as an argument to `SystemExit`.
+    """
+
+def atexit(func: Callable[[], None] | None, /) -> Callable[[], None] | None:
+    """
+    Register *func* to be called upon termination.  *func* must be a callable
+    that takes no arguments, or ``None`` to disable the call.  The ``atexit``
+    function will return the previous value set by this function, which is
+    initially ``None``.
+
+    .. admonition:: Difference to CPython
+       :class: attention
+
+       This function is a MicroPython extension intended to provide similar
+       functionality to the :mod:`atexit` module in CPython.
+    """
+
+def print_exception(exc: BaseException, file: IOBase[str] = stdout, /) -> None:
+    """
+    Print exception with a traceback to a file-like object *file* (or
+    `sys.stdout` by default).
+
+    .. admonition:: Difference to CPython
+       :class: attention
+
+       This is simplified version of a function which appears in the
+       ``traceback`` module in CPython. Unlike ``traceback.print_exception()``,
+       this function takes just exception value instead of exception type,
+       exception value, and traceback object; *file* argument should be
+       positional; further arguments are not supported. CPython-compatible
+       ``traceback`` module can be found in `micropython-lib`.
+
+    .. function:: settrace(tracefunc)
+
+    Enable tracing of bytecode execution.  For details see the `CPython
+    documentaion <https://docs.python.org/3/library/sys.html#sys.settrace>`_.
+
+    This function requires a custom MicroPython build as it is typically not
+    present in pre-built firmware (due to it affecting performance).  The relevant
+    configuration option is *MICROPY_PY_SYS_SETTRACE*.
+    """

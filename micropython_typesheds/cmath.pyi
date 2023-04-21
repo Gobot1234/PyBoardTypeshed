@@ -22,54 +22,54 @@ __copyright__ = "Howard C Lovatt, 2020 onwards."
 __license__ = "MIT https://opensource.org/licenses/MIT (as used by MicroPython)."
 __version__ = "7.5.3"  # Version set by https://github.com/hlovatt/tag2ver
 
-from typing import SupportsComplex, SupportsFloat, Final
+from typing import SupportsComplex, SupportsFloat, TypeAlias
 
-_C: Final = SupportsFloat | SupportsComplex
+_C: TypeAlias = SupportsFloat | SupportsComplex
 
 def cos(z: _C, /) -> complex:
     """
-   Return the cosine of ``z``.
-   """
+    Return the cosine of ``z``.
+    """
 
 def exp(z: _C, /) -> complex:
     """
-   Return the exponential of ``z``.
-   """
+    Return the exponential of ``z``.
+    """
 
 def log(z: _C, /) -> complex:
     """
-   Return the natural logarithm of ``z``.  The branch cut is along the negative real axis.
-   """
+    Return the natural logarithm of ``z``.  The branch cut is along the negative real axis.
+    """
 
 def log10(z: _C, /) -> complex:
     """
-   Return the base-10 logarithm of ``z``.  The branch cut is along the negative real axis.
-   """
+    Return the base-10 logarithm of ``z``.  The branch cut is along the negative real axis.
+    """
 
 def phase(z: _C, /) -> float:
     """
-   Returns the phase of the number ``z``, in the range (-pi, +pi].
-   """
+    Returns the phase of the number ``z``, in the range (-pi, +pi].
+    """
 
 def polar(z: _C, /) -> tuple[float, float]:
     """
-   Returns, as a tuple, the polar form of ``z``.
-   """
+    Returns, as a tuple, the polar form of ``z``.
+    """
 
 def rect(r: float, phi: float, /) -> complex:
     """
-   Returns the complex number with modulus ``r`` and phase ``phi``.
-   """
+    Returns the complex number with modulus ``r`` and phase ``phi``.
+    """
 
 def sin(z: _C, /) -> complex:
     """
-   Return the sine of ``z``.
-   """
+    Return the sine of ``z``.
+    """
 
 def sqrt(z: _C, /) -> complex:
     """
-   Return the square-root of ``z``.
-   """
+    Return the square-root of ``z``.
+    """
 
 e: Final[float] = ...
 """
